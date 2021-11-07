@@ -13,10 +13,8 @@
 </head>
 <body>
 	<div class="center-content">
-		<div id="header">
-		
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
-		</div>
+
 		<form class="search-form">
 			<fieldset>
 				<input type="text" name="keyword" /> <input type="submit"
