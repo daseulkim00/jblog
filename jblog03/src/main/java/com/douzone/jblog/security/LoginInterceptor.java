@@ -7,12 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.douzone.jblog.service.UserService;
 import com.douzone.jblog.vo.UserVO;
 
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
-	private com.douzone.jblog.service.UserService userService;
+	private UserService userService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
