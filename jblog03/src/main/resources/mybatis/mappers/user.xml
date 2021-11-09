@@ -19,7 +19,7 @@
 		]]>
 	</select>
 	
-		<select id="findById" parameterType="string" resultType="uservo">
+	<select id="findById" parameterType="string" resultType="uservo">
 		<![CDATA[
 		select id
 		  from user

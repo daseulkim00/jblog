@@ -13,16 +13,9 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>Spring 이야기</h1>
-			<ul>
-				<li><a href="${pageContext.request.contextPath}/user/login">로그인</a></li>
-				<li><a href="${pageContext.request.contextPath}">로그아웃</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/views/blog-admin-basic.jsp">블로그
-						관리</a></li>
-			</ul>
-		</div>
+	
+	<c:import url="/WEB-INF/views/includes/blogheader.jsp" />
+	
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
@@ -39,11 +32,11 @@
 						<tr>
 							<td class="t">로고이미지</td>
 							<td><img
-								src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg"></td>
+								src="${pageContext.request.contextPath}/${blog.logo}"></td>
 						</tr>
 						<tr>
 							<td class="t">&nbsp;</td>
-							<td><input type="file" name="logo-file"></td>
+							<td><input type="file" name="file"></td>
 						</tr>
 						<tr>
 							<td class="t">&nbsp;</td>

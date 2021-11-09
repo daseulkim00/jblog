@@ -40,11 +40,12 @@
 				</property>
 			</bean>
 		</mvc:message-converters>
-		  <!--  Argument Resolver -->
-<!-- 		 	<mvc:argument-resolvers> -->
-<!-- 				<bean -->
-<!-- 					class="com.douzone.jblog.security.AuthUserHandlerMethodArgumentResolver" /> -->
-<!-- 		 	</mvc:argument-resolvers> -->
+		 <!--   Argument Resolver -->
+		 	<mvc:argument-resolvers>
+				<bean
+					class="com.douzone.jblog.security.AuthUserHandlerMethodArgumentResolver" />
+		 	</mvc:argument-resolvers>
+		 	
 	    </mvc:annotation-driven>
 	
 		<!-- 서블릿 컨테이너(tomcat)의 DefaultServlet 위임(Delegate) Handler -->
@@ -84,5 +85,26 @@
 <!-- 			<bean class="com.douzone.mysite.security.AuthInterceptor" /> -->
 <!-- 		</mvc:interceptor> -->
 	</mvc:interceptors>
+	
+		<!-- Custom Message Source -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/message_ko</value>
+			</list>
+		</property>
+	</bean>
+	
+		<!-- Multipart Resolver (blog/admin-basic 로고 이미지변경) -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" / -->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
 	
 </beans>

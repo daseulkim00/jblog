@@ -6,7 +6,7 @@ ul, ol			{ list-style-type: none }
 fieldset		{ border:none }
 
 a:link 			{ color:#696969; text-decoration:none; font-weight:bold; }
-a:visited 		{ color:#696969F; text-decoration:none; font-weight:bold; }
+a:visited 		{ color:#696969; text-decoration:none; font-weight:bold; }
 a:active 		{ color:#696969; text-decoration:none; font-weight:bold; }
 a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; } 
 
@@ -56,8 +56,8 @@ div#footer					{ clear:both; width:100% }
 
 /* header */
 div#header h1		{ text-align:center; line-height:100px; margin:0; color:#fff }
-div#header ul		{ height:20px } 
-div#header li		{ float:right; margin-right:10px; }
+div#header ul		{ height:20px ; float:right; } 
+div#header li		{ float:left; margin-right:10px; }
 div#header li a 	{ color:#fff; font-weight:bold; text-decoration:none; }
 
 #header h1 a:hover	 { color:#79B30B; text-decoration:none  }
