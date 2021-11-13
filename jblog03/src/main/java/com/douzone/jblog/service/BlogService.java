@@ -12,9 +12,14 @@ public class BlogService {
 	@Autowired
 	private BlogRepository blogRepository;
 	
+	
 	public BlogVO getBlog(UserVO vo) {
 		
 		return blogRepository.find(vo);
+	}
+
+	public boolean update(BlogVO blog) {
+		return blogRepository.update(blog);
 	}
 
 	

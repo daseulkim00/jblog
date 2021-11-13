@@ -17,4 +17,9 @@ public class BlogRepository {
 		 return sqlSession.selectOne("blog.find", vo);  //blog.xml에서 blog에서 find
 	
 	 }
+
+	 public boolean update(BlogVO vo) {
+			int count = sqlSession.update("blog.update", vo);
+			return count == 1;  
+		}
 }
