@@ -13,7 +13,6 @@ public class BlogRepository {
 	 private SqlSession sqlSession;
 	 
 	 public BlogVO find(UserVO vo) {
-		 
 		 return sqlSession.selectOne("blog.find", vo);  //blog.xml에서 blog에서 find
 	
 	 }
@@ -22,4 +21,13 @@ public class BlogRepository {
 			int count = sqlSession.update("blog.update", vo);
 			return count == 1;  
 		}
+	 
+	 public boolean insert(BlogVO vo) {
+		 return sqlSession.insert("blog.insert",vo) == 1;
+	 }
+
+	 
+	 
+	 
+	 
 }

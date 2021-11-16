@@ -12,13 +12,23 @@
 		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
 	</select>
 	
+	
 	<update id="update" parameterType="blogvo">   <!-- update할때 새로운 값 가져올때 #{}사용 -->
 	<![CDATA[
 		update blog set title=#{title }, logo=#{logo } where id=#{id}
-		]]>	
 	
+	]]>	
 	</update>
 	
+	
+	<insert id="insert" parameterType="blogvo">   <!-- update할때 새로운 값 가져올때 #{}사용 -->
+	<![CDATA[
+		insert 
+			into blog 
+			values (#{id },#{title } ,#{logo })
+	
+	]]>	
+	</insert>
 
 	
 </mapper>
