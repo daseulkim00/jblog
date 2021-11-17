@@ -38,8 +38,7 @@
 									<td>10</td>
 									<td>${vo.desc }</td>
 									
-									<%-- <td><a href="${pageContext.request.contextPath }/blog/delete/${vo.no }">삭제</a></td> --%>
-									
+									<!-- delete -->
 									<c:choose>
 										<c:when test="${fn:length(list) eq 1}">
 											<td>
