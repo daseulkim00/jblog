@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +44,9 @@ public class BlogController {
 	public String main(@AuthUser UserVO vo, Model model) {
 		BlogVO blog = blogService.getBlog(vo);
 		model.addAttribute("blog", blog);   //JSP ${blog. }이렇게 사용가능 
+		
+		List<CategoryVO> list = categoryService.getCategory(vo.getId());
+		model.addAttribute("list",list);
 		return "blog/blog-main";
 	}
 	
@@ -88,6 +92,22 @@ public class BlogController {
 		
 		return "redirect:/blog/blog-admin-category";
 	}
+	
+	//delete
+	@RequestMapping("delete/{no}")
+	public String delete(@PathVariable("no") Long no) {
+		categoryService.deleteCategory(no);
+		return "redirect:/blog/blog-admin-category";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	/////////////////write////////////////////////////
 	
 
 	

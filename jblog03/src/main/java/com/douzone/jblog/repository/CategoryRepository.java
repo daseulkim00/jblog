@@ -22,5 +22,10 @@ public class CategoryRepository {
 		int count = sqlSession.insert("category.insert" ,vo);
 		return count ==1;
 	}
+	public boolean delete(CategoryVO vo) {
+		int count = sqlSession.delete("category.delete", vo );
+		return count ==1;
+	
+	}
 	
 }

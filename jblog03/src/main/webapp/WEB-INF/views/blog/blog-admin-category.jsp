@@ -33,11 +33,28 @@
 		      		<c:set var="count" value="${fn:length(list) }"/>
 		      		<c:forEach items="${list }" var="vo" varStatus="status">
 								<tr>
-									<td>${vo.no }</td>
+									<td>${status.count}</td>
 									<td>${vo.name }</td>
 									<td>10</td>
 									<td>${vo.desc }</td>
-									<td><a href="${pageContext.request.contextPath }/guestbook/delete/${vo.no }">삭제</a></td>
+									
+									<%-- <td><a href="${pageContext.request.contextPath }/blog/delete/${vo.no }">삭제</a></td> --%>
+									
+									<c:choose>
+										<c:when test="${fn:length(list) eq 1}">
+											<td>
+										<%-- 	<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"> --%>
+											</td>
+										</c:when>
+										<c:otherwise>
+											<td>
+											<a href="${pageContext.request.contextPath }/blog/delete/${vo.no }">
+												<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+											</a>
+											</td>
+										</c:otherwise>
+									</c:choose>
+								
 								</tr>
 					</c:forEach>
 							  

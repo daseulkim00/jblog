@@ -7,7 +7,7 @@
 		<![CDATA[
 		select no , name , `desc`   
 		   from category
-		  where blog_id=#{blogId }     
+		  where blog_id=#{blogId }   
 		]]>
 		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
 	</select>
@@ -18,6 +18,12 @@
 		]]>
 		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
 	</insert>
+	
+	<delete id="delete" parameterType="categoryvo">
+		<![CDATA[
+		delete from category where no=#{no }
+		]]>
+	</delete>
 	
 
 	

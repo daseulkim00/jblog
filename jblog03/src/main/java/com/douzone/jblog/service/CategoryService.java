@@ -19,8 +19,13 @@ public class CategoryService {
 	}
 
 	public boolean addCategory(CategoryVO vo) {
-		return categoryRepository.insert(vo);
+		return categoryRepository.insert(vo);	
+	}
+	
+	public boolean deleteCategory(Long no) {
+		CategoryVO vo = new CategoryVO();
+		vo.setNo(no);
 		
-		
+		return categoryRepository.delete(vo);
 	}
 }
