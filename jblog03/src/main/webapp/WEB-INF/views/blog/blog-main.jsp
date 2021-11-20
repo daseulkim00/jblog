@@ -47,7 +47,7 @@
 			
 			<c:set var="count" value="${fn:length(list) }"/>
 		       <c:forEach items="${list }" var="vo" varStatus="status">
-				<li>${vo.name }</li>
+				<li><a>${vo.name }</a></li>
 			  </c:forEach>
 			  
 			</ul>

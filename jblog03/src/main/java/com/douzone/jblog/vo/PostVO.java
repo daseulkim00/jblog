@@ -6,41 +6,44 @@ public class PostVO {
 	private String contents;
 	private String regDate;
 	private Long categoryNo;
-	Long getNo() {
+	
+	public Long getNo() {
 		return no;
 	}
-	void setNo(Long no) {
+	public void setNo(Long no) {
 		this.no = no;
 	}
-	String getTitle() {
+	public String getTitle() {
 		return title;
 	}
-	void setTitle(String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
-	String getContents() {
+	public String getContents() {
 		return contents;
 	}
-	void setContents(String contents) {
+	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	String getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
-	void setRegDate(String regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	Long getCategoryNo() {
+	public Long getCategoryNo() {
 		return categoryNo;
 	}
-	void setCategoryNo(Long categoryNo) {
+	public void setCategoryNo(Long categoryNo) {
 		this.categoryNo = categoryNo;
 	}
 	@Override
 	public String toString() {
-		return "postVO [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate
+		return "PostVO [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate
 				+ ", categoryNo=" + categoryNo + "]";
 	}
+	
+	
 	
 	
 }

@@ -20,8 +20,10 @@ import com.douzone.jblog.security.AuthUser;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
+import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.vo.BlogVO;
 import com.douzone.jblog.vo.CategoryVO;
+import com.douzone.jblog.vo.PostVO;
 import com.douzone.jblog.vo.UserVO;
 // import com.douzone.mysite.service.FileUploadService;
 
@@ -39,6 +41,9 @@ public class BlogController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	@Autowired
+	private PostService postService;
 	
 	@GetMapping("")
 	public String main(@AuthUser UserVO vo, Model model) {
@@ -101,19 +106,20 @@ public class BlogController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
 	/////////////////write////////////////////////////
 	
-
-	
-	@RequestMapping("/blog-admin-write")
-	public String write() {
+	@GetMapping("/blog-admin-write")
+	public String write(@AuthUser UserVO vo, Model model){
+		List<CategoryVO> list = categoryService.getCategory(vo.getId());
+		model.addAttribute("list",list);
 		return "blog/blog-admin-write";
+	}
+	
+	
+	@PostMapping("/blog-admin-write")
+	public String write(@AuthUser UserVO uservo, PostVO postvo) {		
+		postService.writePost(postvo);
+		return "redirect:/blog/blog-admin-write";
 	}
 	
 	
