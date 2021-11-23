@@ -10,16 +10,20 @@
 
 			<c:when test="${empty authUser }">
 				<li><a href="${pageContext.request.contextPath}/user/login">로그인</a></li>
-				<li><a href="${pageContext.request.contextPath}/user/join">회원가입</a></li>
+			</c:when>
+			
+			<c:when test="${authUser.id eq blog.id}">
+				<li><a href=#>${authUser.name }님</a></li>
+				<li><a href="${pageContext.request.contextPath}/blog/${blog.id}">메인으로</a></li>
+				<li><a href="${pageContext.request.contextPath}/blog/${blog.id}/blog-admin-basic">블로그 관리</a></li>
 			</c:when>
 
 			<c:otherwise>
-				<li><a href=#>${authUser.name }님</a></li>
-				<li><a href="${pageContext.request.contextPath}/blog">메인으로</a></li>
 				<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-				<li><a href="${pageContext.request.contextPath}/blog/blog-admin-basic">블로그 관리</a></li>
 				<!-- spring-servlet.xml -->
 			</c:otherwise>
+			
+			
 		</c:choose>
 	</ul>
 </div>

@@ -12,8 +12,8 @@ public class BlogRepository {
 	 @Autowired
 	 private SqlSession sqlSession;
 	 
-	 public BlogVO find(UserVO vo) {
-		 return sqlSession.selectOne("blog.find", vo);  //blog.xml에서 blog에서 find
+	 public BlogVO find(String id) {
+		 return sqlSession.selectOne("blog.find", id);  //blog.xml에서 blog에서 find
 	
 	 }
 

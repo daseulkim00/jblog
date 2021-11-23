@@ -1,5 +1,7 @@
 package com.douzone.jblog.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,5 +17,9 @@ public class PostRepository {
 	public boolean insert(PostVO vo) {
 		int count = sqlSession.insert("post.insert",vo);
 		return count == 1;
+	}
+	
+	public List<PostVO> findAll(String blogId) {
+		return sqlSession.selectList("post.findAll",blogId);
 	}
 }

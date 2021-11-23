@@ -13,9 +13,9 @@ public class BlogService {
 	private BlogRepository blogRepository;
 	
 	
-	public BlogVO getBlog(UserVO vo) {
+	public BlogVO getBlog(String id) {
 		
-		return blogRepository.find(vo);
+		return blogRepository.find(id);
 	}
 
 	public boolean update(BlogVO blog) {

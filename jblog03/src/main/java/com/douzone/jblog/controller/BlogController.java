@@ -28,7 +28,7 @@ import com.douzone.jblog.vo.UserVO;
 // import com.douzone.mysite.service.FileUploadService;
 
 @Controller
-@RequestMapping("/blog")
+@RequestMapping("/blog/{id}")
 public class BlogController {
 
 	@Autowired
@@ -46,26 +46,31 @@ public class BlogController {
 	private PostService postService;
 	
 	@GetMapping("")
-	public String main(@AuthUser UserVO vo, Model model) {
-		BlogVO blog = blogService.getBlog(vo);
+	public String main(@PathVariable("id") String id, Model model) {
+		
+		BlogVO blog = blogService.getBlog(id);
 		model.addAttribute("blog", blog);   //JSP ${blog. }이렇게 사용가능 
 		
-		List<CategoryVO> list = categoryService.getCategory(vo.getId());
+		List<CategoryVO> list = categoryService.getCategory(id);
 		model.addAttribute("list",list);
+		
+//		List<PostVO> postlist = postService.getPost(vo.getId());
+//		model.addAttribute("postlist",postlist);
+
 		return "blog/blog-main";
 	}
 	
 	
 	@GetMapping("/blog-admin-basic")
 	public String blogadmin(@AuthUser UserVO vo, Model model) {
-		BlogVO blog = blogService.getBlog(vo);
+		BlogVO blog = blogService.getBlog(vo.getId());
 		model.addAttribute("blog", blog);
 		return "blog/blog-admin-basic";
 	}
 	
 	
 	@PostMapping("/blog-admin-basic")
-	public String blogadmin(BlogVO blog, @RequestParam("file") MultipartFile file) {
+	public String blogadmin(@PathVariable("id") String id,BlogVO blog, @RequestParam("file") MultipartFile file) {
 		
 		try{
 			String logo = fileUploadService.restoreImage(file);
@@ -76,7 +81,7 @@ public class BlogController {
 		blogService.update(blog);
 		servletContext.setAttribute("blog", blog);
 		
-		return "redirect:/blog";
+		return "redirect:/blog/"+id;
 		
 	}
 	
@@ -84,6 +89,9 @@ public class BlogController {
 	//list
 	@RequestMapping("/blog-admin-category")
 	public String category( @AuthUser UserVO vo ,Model model) {
+		BlogVO blog = blogService.getBlog(vo.getId());
+		model.addAttribute("blog",blog);
+		
 		List<CategoryVO> list = categoryService.getCategory(vo.getId());
 		model.addAttribute("list",list);
 		return "blog/blog-admin-category";
@@ -91,18 +99,18 @@ public class BlogController {
 	
 	// add
 	@RequestMapping(value ="/blog-admin-category/add", method = RequestMethod.POST )
-	public String add(@AuthUser UserVO uservo, CategoryVO vo) {
+	public String add(@PathVariable("id") String id, @AuthUser UserVO uservo, CategoryVO vo) {
 		vo.setBlogId(uservo.getId());  // 로그인하고있는 아이디를 셋팅해준다.
 		categoryService.addCategory(vo);
 		
-		return "redirect:/blog/blog-admin-category";
+		return "redirect:/blog/"+id+"/blog-admin-category";
 	}
 	
 	//delete
 	@RequestMapping("delete/{no}")
-	public String delete(@PathVariable("no") Long no) {
+	public String delete(@PathVariable("no") Long no,@PathVariable("id") String id) {
 		categoryService.deleteCategory(no);
-		return "redirect:/blog/blog-admin-category";
+		return "redirect:/blog/"+id+"/blog-admin-category";
 		
 	}
 	
@@ -110,6 +118,9 @@ public class BlogController {
 	
 	@GetMapping("/blog-admin-write")
 	public String write(@AuthUser UserVO vo, Model model){
+		BlogVO blog = blogService.getBlog(vo.getId());
+		model.addAttribute("blog",blog);
+		
 		List<CategoryVO> list = categoryService.getCategory(vo.getId());
 		model.addAttribute("list",list);
 		return "blog/blog-admin-write";
@@ -117,9 +128,9 @@ public class BlogController {
 	
 	
 	@PostMapping("/blog-admin-write")
-	public String write(@AuthUser UserVO uservo, PostVO postvo) {		
+	public String write(@PathVariable("id") String id, @AuthUser UserVO uservo, PostVO postvo) {		
 		postService.writePost(postvo);
-		return "redirect:/blog/blog-admin-write";
+		return "redirect:/blog/"+id+"/blog-admin-write";
 	}
 	
 	
