@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.jblog.dto.JsonResult;
 import com.douzone.jblog.exception.FileUploadException;
 import com.douzone.jblog.security.AuthUser;
 import com.douzone.jblog.service.BlogService;
@@ -45,17 +48,29 @@ public class BlogController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping("")
-	public String main(@PathVariable("id") String id, Model model) {
+	@GetMapping({"","/{no}","/{no}/{pno}"})
+	public String main(@PathVariable(value ="no", required = false) Long no ,
+					   @PathVariable(value="pno", required=false)Long pno,
+					   @PathVariable("id") String id, Model model) {
 		
 		BlogVO blog = blogService.getBlog(id);
 		model.addAttribute("blog", blog);   //JSP ${blog. }이렇게 사용가능 
 		
 		List<CategoryVO> list = categoryService.getCategory(id);
 		model.addAttribute("list",list);
+		if(no == null) {
+			no = list.get(0).getNo();
+		}
 		
-//		List<PostVO> postlist = postService.getPost(vo.getId());
-//		model.addAttribute("postlist",postlist);
+		List<PostVO> post = postService.getPost(no);
+		if(pno == null && post.size() != 0) {
+			pno = post.get(0).getNo();
+		}
+		
+		PostVO pvo = postService.getContents(pno);
+		
+		model.addAttribute("pvo",pvo);
+		model.addAttribute("post",post);
 
 		return "blog/blog-main";
 	}
@@ -95,6 +110,25 @@ public class BlogController {
 		List<CategoryVO> list = categoryService.getCategory(vo.getId());
 		model.addAttribute("list",list);
 		return "blog/blog-admin-category";
+	}
+	
+	// api 
+	@GetMapping("/catelist")
+	@ResponseBody
+	public JsonResult catelist(@PathVariable("id") String id ) {
+		List<CategoryVO> list = categoryService.getCategory(id);
+		
+		return JsonResult.success(list);
+	}
+	
+	@PostMapping("/addCategory")
+	@ResponseBody
+	public JsonResult cateadd(@PathVariable("id") String id, @RequestBody CategoryVO vo) {
+		vo.setBlogId(id);
+		categoryService.addCategory(vo);
+		
+		return JsonResult.success(vo);
+		
 	}
 	
 	// add

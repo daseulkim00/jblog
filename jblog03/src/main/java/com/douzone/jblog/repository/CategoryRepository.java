@@ -27,5 +27,9 @@ public class CategoryRepository {
 		return count ==1;
 	
 	}
+
+	public List<CategoryVO> findCount(String blogId) {
+		return sqlSession.selectList("category.findCount",blogId);
+	}
 	
 }

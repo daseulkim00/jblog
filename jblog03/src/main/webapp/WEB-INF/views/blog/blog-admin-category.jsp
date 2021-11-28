@@ -8,6 +8,89 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+	var render = function(vo, index, size){
+		var html =
+	    "<tr>" +
+			"<td>" + (index+1) + "</td>" +
+			"<td>" + vo.name + "</td>" +
+			"<td>" + vo.postcount + "</td>" +
+			"<td>" + vo.desc + "</td>";
+			
+			if(size == 1){
+				html += "<td>"+
+				"<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'></td>";
+			}else{
+				html += "<td>" +
+				"<a href='${pageContext.request.contextPath }/blog/${blog.id}/delete/"+vo.no+ "'>" +
+				"<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'></td>"
+			}
+		
+			html += "</tr>"
+			return html;
+			}
+	
+	var fetchCategory = function() {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/blog/${blog.id}/catelist',
+			type: 'get',
+			dataType: 'json',
+			data: '',
+			success: function (response) {
+				
+				if(response.result != "success"){
+					console.error(response.message);
+					return;
+					
+				}
+				var categorylist = "";
+				for(var i=0; i<response.data.length; i ++){
+					var html = render(response.data[i], i , response.data.length)
+					categorylist += html	
+					console.log(html)
+				}
+				
+				$(".admin-cat").append(categorylist)
+				
+			}
+		})
+	}
+	fetchCategory();
+	
+	$(function() {
+		$('#add-form').submit(function(event) {
+			event.preventDefault();
+			alert('hhhhhhhhh')
+			var vo ={};
+			vo.name =$("#input-name").val();
+			vo.desc=$("#desc").val();
+			
+		$.ajax({
+			url: '${pageContext.request.contextPath}/blog/${blog.id}/addCategory',
+			type: 'post',
+			dataType:'json',
+			contentType:'application/json',
+			data: JSON.stringify(vo),
+			success: function(response){
+				if(response.result != "success"){
+				console.error(response.message)
+				return;
+				}
+			var html = render(response.data)
+			$(".admin-cat").append(html)
+			}
+		
+		})  
+			
+			
+		})
+	})
+	
+	
+	
+	
+</script>
 </head>
 <body>
 	<div id="container">
@@ -29,50 +112,23 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
-		      		
-		      		<c:set var="count" value="${fn:length(list) }"/>
-		      		<c:forEach items="${list }" var="vo" varStatus="status">
-								<tr>
-									<td>${status.count}</td>
-									<td>${vo.name }</td>
-									<td>10</td>
-									<td>${vo.desc }</td>
-									
-									<!-- delete -->
-									<c:choose>
-										<c:when test="${fn:length(list) eq 1}">
-											<td>
-										<%-- 	<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"> --%>
-											</td>
-										</c:when>
-										<c:otherwise>
-											<td>
-											<a href="${pageContext.request.contextPath }/blog/${blog.id}/delete/${vo.no }">
-												<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-											</a>
-											</td>
-										</c:otherwise>
-									</c:choose>
-								
-								</tr>
-					</c:forEach>
-							  
+		      			  
 				</table>
 				
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-      			<form action="${pageContext.request.contextPath }/blog/${blog.id}/blog-admin-category/add" method="post">
+      			<form id="add-form" action="${pageContext.request.contextPath }/blog/${blog.id}/blog-admin-category/add" method="post">
 				      	<table id="admin-cat-add">
 				      		<tr>
 				      			<td class="t">카테고리명</td>
-				      			<td><input type="text" name="name"></td>
+				      			<td><input id="input-name" type="text" name="name"></td>
 				      		</tr>
 				      		<tr>
 				      			<td class="t">설명</td>
-				      			<td><input type="text" name="desc"></td>
+				      			<td><input id="desc" type="text" name="desc"></td>
 				      		</tr>
 				      		<tr>
 				      			<td class="s">&nbsp;</td>
-				      			<td><input type="submit" value="카테고리 추가"></td>
+				      			<td><input  type="submit" value="카테고리 추가"></td>
 				      		</tr>      		      		
 				      	</table> 
 		      	</form>

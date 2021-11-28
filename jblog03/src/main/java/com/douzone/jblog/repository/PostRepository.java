@@ -19,7 +19,11 @@ public class PostRepository {
 		return count == 1;
 	}
 	
-	public List<PostVO> findAll(String blogId) {
-		return sqlSession.selectList("post.findAll",blogId);
+	public List<PostVO> findAll(Long no) {
+		return sqlSession.selectList("post.findAll",no);
+	}
+	
+	public PostVO findContents(Long no) {
+		return sqlSession.selectOne("post.findContents",no);
 	}
 }

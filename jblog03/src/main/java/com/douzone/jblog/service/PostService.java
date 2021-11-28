@@ -17,8 +17,12 @@ public class PostService {
 		return postRepository.insert(vo);
 	}
 	
-	public List<PostVO> getPost(String blogId){
-	 return postRepository.findAll(blogId);
+	public List<PostVO> getPost(Long no){
+	 return postRepository.findAll(no);
+	}
+
+	public PostVO getContents(Long pno) {
+		return postRepository.findContents(pno);
 	}
 	
 	
