@@ -12,7 +12,7 @@
 		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
 	</select>
 	
-	<insert id="insert" parameterType="categoryvo" >
+	<insert id="insert" parameterType="categoryvo" useGeneratedKeys="true" keyProperty="no">
 		<![CDATA[
 		insert into category values(null, #{name}, #{desc}, #{blogId} )
 		]]>
