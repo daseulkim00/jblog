@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+	
+	<insert id="insert" parameterType="postvo" >
+		<![CDATA[
+		insert 
+		into post 
+		values(null, #{title}, #{contents}, DATE_FORMAT(now(),'%Y-%m-%d'),#{categoryNo})
+		]]>
+	
+	</insert>
+	
+	<select id="findAll" parameterType="long" resultType="postvo">
+		<![CDATA[
+	 select no, title, DATE_FORMAT(reg_date,'%Y-%m-%d') as regDate, category_no as categoryNo 
+	 from post 
+	 where category_no=#{categoryNo}
+	 
+		]]>
+		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
+	</select>
+	
+	<select id="findContents" parameterType="long" resultType="postvo">
+		<![CDATA[
+	 select title, contents from post where no=#{no}
+		]]>
+		<!-- selectone으로 해줘서 where에 id 한개가 나오거나 0개가 나와야한다. 2개이상부터는 selectlist를 사용 -->
+	</select>
+	
+	
+	
+	
+
+	
+</mapper>

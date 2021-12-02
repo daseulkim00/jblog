@@ -91,33 +91,40 @@
 						})
 						
 						
-		$(".admin-cat").on("click",".delete",function(event) {
-			event.preventDefault()
-			
-			var deleteno = $(event.target).data("no");
-			console.log($(event.target).data("no"));
-			t = event.target;
-			
-			$.ajax({
-				url:'${pageContext.request.contextPath}/blog/${blog.id}/deletecate/'+ deleteno,
-				type:'delete',
-				dataType: 'json',
-				data: 'deleteno=' + deleteno  ,
-				success: function(response){
-					if(response.result != "success"){
-						console.error(response.message)
-						return;
-					}
-				}
-			})
-			
-			$('tr[data-no=' +$(t).data("no") + ']').remove()
-			
-			
-		
-		})
-		fetchCategory();
-	})
+						$(".admin-cat").on("click",".delete",function(event) {
+							event.preventDefault()
+							
+							var deleteno = $(event.target).data("no");
+							/* console.log($(event.target).data("no")); */
+							t = event.target;
+								
+								var list = document.getElementsByTagName("tbody")[0]
+								
+								if(list.childElementCount == 2){
+									return;
+								}
+							
+							$.ajax({
+								url:'${pageContext.request.contextPath}/blog/${blog.id}/deletecate/'+ deleteno,
+								type:'delete',
+								dataType: 'json',
+								data: 'deleteno=' + deleteno  ,
+								success: function(response){
+									if(response.result != "success"){
+										console.error(response.message)
+										return;
+									}
+									
+								}
+									
+							})
+									$('tr[data-no=' +$(t).data("no") + ']').remove()  
+							
+							
+
+						})
+						fetchCategory();
+					})
 </script>
 </head>
 <body>
